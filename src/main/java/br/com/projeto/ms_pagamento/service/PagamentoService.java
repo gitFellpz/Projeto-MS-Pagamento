@@ -1,6 +1,7 @@
 package br.com.projeto.ms_pagamento.service;
 
 import br.com.projeto.ms_pagamento.model.Pagamento;
+import br.com.projeto.ms_pagamento.model.Status;
 import br.com.projeto.ms_pagamento.repository.PagamentoRepository;
 import dto.PagamentoDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,5 +30,24 @@ public class PagamentoService {
 
         //return new PagamentoDTO(entity);
         return (entity != null) ? new PagamentoDTO(entity) : null;
+    }
+
+    @Transactional
+    public PagamentoDTO insert(PagamentoDTO dto) {
+        Pagamento entity = new Pagamento();
+        copyDtoToEntity(dto, entity);
+        entity.setStatus(Status.CRIADO); //definindo status criado para o novo pagamento inserido
+        entity = repository.save(entity);
+        return new PagamentoDTO(entity);
+    }
+
+    private void copyDtoToEntity(PagamentoDTO dto, Pagamento entity) {
+        entity.setValor(dto.getValor());
+        entity.setNome(dto.getNome());
+        entity.setNumeroCartao(dto.getNumeroCartao());
+        entity.setValidade(dto.getValidade());
+        entity.setCodigoSeguranca(dto.getCodigoSeguranca());
+        entity.setPedidoId(dto.getPedidoId());
+        entity.setFormaPagamentoId(dto.getFormaPagamentoId());
     }
 }
