@@ -43,10 +43,18 @@ public class PagamentoDTO {
     private Long pedidoId;
 
     @NotNull(message = "Forma de pagamento ID é obrigatório")
-    private Long formaPagamento;
+    private Long formaPagamentoId;
 
     public PagamentoDTO (Pagamento entity) {
         id = entity.getId();
+        valor = entity.getValor();
+        nome = entity.getNome();
+        numeroCartao = entity.getNumeroCartao();
+        validade = entity.getValidade();
+        codigoSeguranca = entity.getCodigoSeguranca();
+        status = entity.getStatus();
+        pedidoId = entity.getPedidoId();
+        formaPagamentoId = entity.getFormaPagamento();
     }
 
 }
