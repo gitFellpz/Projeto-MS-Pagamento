@@ -37,6 +37,12 @@ public class PagamentoController {
     @PostMapping
     public ResponseEntity<Object> insert(@RequestBody @Valid PagamentoDTO dto) {
         dto = service.insert(dto);
-        return ResponseHandler.gerarResposta("Pagamento inserido com sucesso.", HttpStatus.OK, dto);
+        return ResponseHandler.gerarResposta("Pagamento inserido com sucesso.", HttpStatus.CREATED, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseHandler.gerarResposta("Pagamento deletado com sucesso.", HttpStatus.OK, null);
     }
 }

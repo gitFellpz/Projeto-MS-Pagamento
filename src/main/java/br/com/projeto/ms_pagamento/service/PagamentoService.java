@@ -50,4 +50,16 @@ public class PagamentoService {
         entity.setPedidoId(dto.getPedidoId());
         entity.setFormaPagamentoId(dto.getFormaPagamentoId());
     }
+
+    @Transactional
+    public void delete (Long id) {
+        if(!repository.existsById(id)){
+            throw new EntityNotFoundException("Recurso não encontrado");
+        }
+        try {
+            repository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Recurso não encontrado.");
+        }
+    }
 }
