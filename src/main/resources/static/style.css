@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  display: flex;
+  background: #f2f2f2;
+}
+
+.drawer {
+  width: 220px;
+  background: #1976d2;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+}
+
+.drawer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.drawer li {
+  margin: 12px 0;
+  cursor: pointer;
+}
+
+.container {
+  flex: 1;
+  padding: 24px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.badges {
+  margin-top: 10px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.badge.blue {
+  color: #1976d2;
+  background: #e3f2fd;
+  border: 1px solid #1976d2;
+}
+
+.badge.green {
+  color: #388e3c;
+  background: #e8f5e9;
+  border: 1px solid #388e3c;
+}
+
+.accordion-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  font-weight: bold;
+  background: #eee;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.accordion-content {
+  background: white;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: none;
+  border-radius: 6px;
+}
+
+.actions button {
+  padding: 10px 16px;
+  margin: 6px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
