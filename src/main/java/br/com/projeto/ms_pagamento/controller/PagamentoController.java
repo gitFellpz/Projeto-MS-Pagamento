@@ -1,8 +1,10 @@
 package br.com.projeto.ms_pagamento.controller;
 
 import br.com.projeto.ms_pagamento.service.PagamentoService;
+import br.com.projeto.ms_pagamento.util.ResponseHandler;
 import dto.PagamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,9 @@ public class PagamentoController {
     private PagamentoService service;
 
     @GetMapping
-    public ResponseEntity<List<PagamentoDTO>> findAll() {
+    public ResponseEntity<Object> findAll() {
         List<PagamentoDTO> dto = service.findAll();
-        return ResponseEntity.ok(dto);
+        String mensagem = dto.isEmpty() ? "Nenhum pagamento encontrado." : "Pagamentos retornados com sucesso";
+        return ResponseHandler.gerarResposta(mensagem, HttpStatus.OK, dto);
     }
 }
