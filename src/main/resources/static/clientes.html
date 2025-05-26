@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clientes - Santander</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="bg-red-800 w-64 min-h-screen p-4 text-white">
+      <h1 class="text-xl font-bold mb-8">Santander Logo</h1>
+      <nav class="flex flex-col gap-4">
+        <a href="#" class="hover:text-red-300">Dashboard</a>
+        <a href="#" class="hover:text-red-300 font-bold underline">Clientes</a>
+        <a href="#" class="hover:text-red-300">Análises</a>
+        <a href="#" class="hover:text-red-300">Configurações</a>
+        <a href="#" class="hover:text-red-300">Sair</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <header class="bg-red-700 text-white p-4 rounded mb-6">
+        <h2 class="text-2xl font-bold">Lista de Clientes</h2>
+      </header>
+
+      <!-- Dashboard Overview -->
+      <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-500 text-sm">Total de Clientes</p>
+          <p class="text-2xl font-bold">1.250</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-500 text-sm">Score Médio</p>
+          <p class="text-2xl font-bold">740</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-500 text-sm">% Inadimplência</p>
+          <p class="text-2xl font-bold">3,1%</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-500 text-sm">Distribuição por Perfil</p>
+          <div class="w-12 h-12 bg-gradient-to-r from-red-500 via-yellow-400 to-green-500 rounded-full mt-2"></div>
+        </div>
+      </section>
+
+      <!-- Filtros e Busca -->
+      <section class="flex flex-wrap gap-4 mb-6 items-center">
+        <input type="text" placeholder="Pesquisar..." class="flex-1 min-w-[200px] p-2 border border-gray-300 rounded" />
+        <select class="p-2 border border-gray-300 rounded">
+          <option>Perfil</option>
+          <option>Início</option>
+          <option>Expansão</option>
+          <option>Madura</option>
+          <option>Declínio</option>
+        </select>
+        <select class="p-2 border border-gray-300 rounded">
+          <option>Geografia</option>
+        </select>
+        <select class="p-2 border border-gray-300 rounded">
+          <option>Setor de atuação</option>
+        </select>
+        <select class="p-2 border border-gray-300 rounded">
+          <option>Score Santander</option>
+        </select>
+        <button onclick="toggleView()" class="ml-auto px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Alterar Exibição</button>
+      </section>
+
+      <!-- Lista de Clientes -->
+      <section id="clientesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const clientes = [
+      { nome: "Tech Solution LTDA", cnpj: "12.145.167/90-78", perfil: "Expansão", score: "Expansão", status: "Ativo", gerente: "Ana Silva" },
+      { nome: "Alpha Indústria", cnpj: "33.987.654/00-12", perfil: "Declínio", score: "Declínio", status: "Ativo", gerente: "João Dias" },
+      { nome: "Beta Comércio ME", cnpj: "55.321.654/11-22", perfil: "Início", score: "Início", status: "Ativo", gerente: "Maria Luz" },
+      { nome: "Deita Tech S/A", cnpj: "79.634.123/45-67", perfil: "Madura", score: "Madura", status: "Ativo", gerente: "Carlos M." },
+      { nome: "Logística Forte", cnpj: "20.123.456/78-90", perfil: "Expansão", score: "Expansão", status: "Ativo", gerente: "Paula Lima" },
+      { nome: "Construtora Alpha", cnpj: "14.654.321/98-76", perfil: "Declínio", score: "Declínio", status: "Ativo", gerente: "Rafael Souza" },
+      { nome: "AgroVale LTDA", cnpj: "87.654.321/09-87", perfil: "Início", score: "Início", status: "Ativo", gerente: "Luciana Gomes" },
+      { nome: "MoveArt Design", cnpj: "65.432.198/76-54", perfil: "Madura", score: "Madura", status: "Ativo", gerente: "Julio César" },
+      { nome: "Net Solutions", cnpj: "98.123.456/77-88", perfil: "Expansão", score: "Expansão", status: "Ativo", gerente: "Tiago Ramos" },
+      { nome: "Farmácia Vida", cnpj: "45.876.123/09-00", perfil: "Início", score: "Início", status: "Ativo", gerente: "Renata Dias" },
+      { nome: "Print Rápido", cnpj: "21.654.987/33-22", perfil: "Declínio", score: "Declínio", status: "Ativo", gerente: "Fernando Alves" },
+      { nome: "Max Eletros", cnpj: "77.321.987/65-43", perfil: "Madura", score: "Madura", status: "Ativo", gerente: "Camila Moura" },
+      { nome: "Auto Peças Sul", cnpj: "11.999.888/77-66", perfil: "Expansão", score: "Expansão", status: "Ativo", gerente: "José Antunes" },
+      { nome: "Pet Mais", cnpj: "34.555.666/00-77", perfil: "Início", score: "Início", status: "Ativo", gerente: "Carla Pinto" },
+      { nome: "Doces Regina", cnpj: "22.111.333/44-55", perfil: "Madura", score: "Madura", status: "Ativo", gerente: "Regina Lopes" }
+    ];
+
+    let gridMode = true;
+
+    function renderGrid() {
+      const container = document.getElementById("clientesContainer");
+      container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+      container.innerHTML = clientes.map(c => `
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="text-lg font-bold mb-2">${c.nome}</h3>
+          <p><strong>CNPJ:</strong> ${c.cnpj}</p>
+          <p><strong>Perfil:</strong> ${c.perfil}</p>
+          <p><strong>Score Santander:</strong> ${c.score}</p>
+          <p><strong>Status:</strong> ${c.status}</p>
+          <p><strong>Gerente:</strong> ${c.gerente}</p>
+          <div class="mt-2">
+            <a href="../index2.html" class="text-blue-600 hover:underline">🔍 Ver mais detalhes</a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderTable() {
+      const container = document.getElementById("clientesContainer");
+      container.className = "overflow-auto w-full";
+      container.innerHTML = `
+        <table class="min-w-full bg-white rounded shadow">
+          <thead>
+            <tr class="bg-gray-100 text-left text-sm font-semibold">
+              <th class="p-2">Razão Social</th>
+              <th class="p-2">CNPJ</th>
+              <th class="p-2">Perfil</th>
+              <th class="p-2">Score Santander</th>
+              <th class="p-2">Status</th>
+              <th class="p-2">Gerente</th>
+              <th class="p-2">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${clientes.map(c => `
+              <tr class="border-t">
+                <td class="p-2">${c.nome}</td>
+                <td class="p-2">${c.cnpj}</td>
+                <td class="p-2">${c.perfil}</td>
+                <td class="p-2">${c.score}</td>
+                <td class="p-2">${c.status}</td>
+                <td class="p-2">${c.gerente}</td>
+                <td class="p-2"><a href="../index2.html" class="text-blue-600 hover:underline">🔍 </a></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function toggleView() {
+      if (gridMode) {
+        renderTable();
+      } else {
+        renderGrid();
+      }
+      gridMode = !gridMode;
+    }
+
+    // Inicializa com grid
+    renderGrid();
+  </script>
+</body>
+
+</html>
